@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    h1 {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    form {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    li {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    
+    a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+    
+    p {
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background-color: #337ab7;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search</h1>
+  <form action="/book" method="get">
+    <input type="text" name="query" placeholder="Search by Address">
+    <button type="submit">Search</button>
+  </form>
+
+  {{#if vaccinationCenters}}
+    <ul>
+      {{#each vaccinationCenters as |vaccinationCenter|}}
+        <li id="{{vaccinationCenter._id}}">
+          <a href="/vaccinationcenter">{{vaccinationCenter.name}}</a>
+          <br>
+          <strong>Address:</strong> {{vaccinationCenter.address}}
+          <br>
+          <strong>Working Hours:</strong> {{vaccinationCenter.workingHours}}
+          <br>
+          <strong>Available Doses:</strong> {{vaccinationCenter.availableDoses}}
+          <br>
+          {{!-- {{vaccinationCenter._id}}  --}}
+          <strong>ID:</strong> {{user._id}}
+          <form action="/book" method="post">
+            <input type="hidden" name="covidId"  value="{{vaccinationCenter._id}}">
+            <button class="btn-primary" type="submit">Book</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No vaccination centers found.</p>
+  {{/if}}
+
+</body>
+</html>

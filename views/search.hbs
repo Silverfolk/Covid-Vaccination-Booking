@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    h1 {
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    form {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    li {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    
+    a {
+      color: #337ab7;
+      text-decoration: none;
+    }
+    
+    p {
+      text-align: center;
+    }
+    
+    .remove-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search</h1>
+  <form action="/search" method="get">
+    <input type="text" name="query" placeholder="Search by address">
+    <button type="submit">Search</button>
+  </form>
+
+  {{#if vaccinationCenters}}
+    <ul>
+      {{#each vaccinationCenters as |vaccinationCenter|}}
+        <li id="{{vaccinationCenter._id}}">
+          <a href="/vaccinationcenter">{{vaccinationCenter.name}}</a>
+          <br>
+          Address: {{vaccinationCenter.address}}
+          <br>
+          Working Hours: {{vaccinationCenter.workingHours}}
+          <br>
+          Available Doses: {{vaccinationCenter.availableDoses}}
+          <br>
+         
+          <form action="/delete" method="post">
+            <input type="hidden" name="covidId" value="{{vaccinationCenter._id}}">
+            <button class="remove-btn">Remove</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No vaccination centers found.</p>
+  {{/if}}
+
+  <script>
+    const removeButtons = document.querySelectorAll('.remove-btn');
+
+    removeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const centerId = this.parentElement.querySelector('input[name="covidId"]').value;
+        removeCenter(centerId);
+      });
+    });
+
+    function removeCenter(centerId) {
+      // Send an AJAX request to the server to remove the vaccination center with the given ID
+      fetch(`/removecenter/${centerId}`, {
+        method: 'DELETE'
+      })
+      .then(response => {
+        if (response.ok) {
+          // Center removed successfully, update the UI to reflect the change
+          const centerElement = document.getElementById(centerId);
+          if (centerElement) {
+            centerElement.remove();
+          }
+        } else {
+          console.error('Error removing vaccination center');
+        }
+      })
+      .catch(error => {
+        console.error('Error removing vaccination center:', error);
+      });
+    }
+  </script>
+</body>
+</html>

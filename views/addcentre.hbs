@@ -1,0 +1,35 @@
+{{#if user}}
+<form action="/addcentre" method="post" class="container">
+<h1>Add Vaccination Center</h1>
+<input type="text" name="name" placeholder="Name" class="form-control mb-2">
+<input type="text" name="address" placeholder="Address" class="form-control mb-2">
+<input type="text" name="workingHours" placeholder="Working hours" class="form-control mb-2">
+<h2>Dosage details</h2>
+<div id="dosageDetails">
+<input type="number" name="availableDoses" placeholder="Available doses" class="form-control mb-2">
+{{!-- <button type="button" id="addDosage">Add dosage</button> --}}
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+$(document).ready(function() {
+var dosageCount = 1;
+$("#addDosage").click(function() {
+var dosageNumberInput = $("<input type="number" name="doseNumber[]" placeholder="Dose number" class="form-control mb-2">");
+var availableDosesInput = $("<input type="number" name="availableDoses[]" placeholder="Available doses" class="form-control mb-2">");
+dosageCount++;
+$("#dosageDetails").append(dosageNumberInput, availableDosesInput);
+});
+// Add validation
+$("input").on("input", function() {
+  var input = $(this);
+  if (input.val().trim() === "") {
+    input.addClass("is-invalid");
+  } else {
+    input.removeClass("is-invalid");
+  }
+});
+});
+</script>
+{{/if}}

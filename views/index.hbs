@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    p {
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      text-decoration: none;
+      background-color: #337ab7;
+      color: #fff;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>{{title}}</h1>
+  <p>Welcome to {{title}}</p>
+
+  {{#if user }}
+    {{#ifEqual user.RegisterAs "user" }}
+      <h1>Following are the tasks that can be implemented by User</h1>
+      <a href="/book" class="btn">Search & Book</a>
+      <br>
+      <img src="https://examplecdn.com/user-image.jpg" alt="User Image">
+    {{else}}
+      <h1>Following are the tasks that can be implemented by Admin</h1>
+      <a href="./addcentre" class="btn">Add Vaccination Centres</a>
+      <a href="/search" class="btn">Get dosage details</a>
+      <br>
+      <img src="https://examplecdn.com/admin-image.jpg" alt="Admin Image">
+    {{/ifEqual}}
+  {{/if}}
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      const animatedElements = document.querySelectorAll('.animated');
+      animatedElements.forEach(function(element) {
+        element.classList.add('fadeInUp');
+      });
+    });
+  </script>
+</body>
+</html>
