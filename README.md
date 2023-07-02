@@ -6,8 +6,8 @@ The project is hosted at: [https://covid-vaccination-booking-silverfolk.onrender
 
 ## Tech Stack
 
-- Backend: [Specify your chosen tech stack]
-- Database: [Specify your chosen database]
+- Backend: Nodejs,Express
+- Database: MongoDB
 
 ## Features
 
